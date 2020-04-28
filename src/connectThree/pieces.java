@@ -2,6 +2,7 @@ package connectThree;
 
 import comp127graphics.CanvasWindow;
 import comp127graphics.Ellipse;
+import comp127graphics.Point;
 
 import java.awt.*;
 
@@ -18,6 +19,5 @@ public pieces(double posX, double posY, Color color){
     public void addToCanvas(CanvasWindow canvas){
         canvas.add(piece);
     }
-
 
 }

@@ -1,5 +1,7 @@
 package connectThree;
 
+import comp127graphics.CanvasWindow;
+import comp127graphics.Ellipse;
 import comp127graphics.Point;
 
 import java.awt.*;
@@ -11,13 +13,17 @@ public class piecesManager {
     private final Color PLAYER_1 = Color.RED, PLAYER_2 = Color.BLUE;
     private gameBoard board;
     private List<pieces> allPieces;
+    private List<Integer> player1Pieces, player2Pieces;
+    private final double SPACE = 85;
 
 
 
     public piecesManager(gameBoard board){
         this.board = board;
         allPieces = new ArrayList<>();
-        for (int i = 0; i < 25; i ++){
+        player1Pieces = new ArrayList<>();
+        player2Pieces = new ArrayList<>();
+        for (int i = 0; i < 20; i ++){
             allPieces.add(null);
         }
     }
@@ -37,16 +43,69 @@ public class piecesManager {
             if (numPosition >= 0 && allPieces.get(numPosition) == null) {
                 if (playerColor) {
                     piece = new pieces(position.getX(), position.getY(), PLAYER_1);
+                    player1Pieces.add(numPosition);
+                    //System.out.println(checkWin(position, player1Pieces));
                     playerColor = false;
                 } else {
                     piece = new pieces(position.getX(), position.getY(), PLAYER_2);
+                    player2Pieces.add(numPosition);
+                    //System.out.println(checkWin(position, player2Pieces));
                     playerColor = true;
                 }
-                allPieces.add(numPosition, piece);
+                allPieces.set(numPosition, piece);
                 return piece;
             }
         }
         return null;
+    }
+
+    /**
+     * Checks all possible positions around the provided position to see if there are three
+     * pieces, of that player's, in a row. Returns true if the game has been won and false if it hasn't.
+     * @param position
+     * @param playerPieces
+     * @return
+     */
+    public boolean checkWin(Point position, List<Integer> playerPieces){
+        List<Boolean> map = createMap(position, playerPieces);
+        List<List<Integer>> testCombinations = List.of(List.of(0,1,2), List.of(1,2,3), List.of(2,3,4), List.of(5,6,2), List.of(6,2,7),
+                List.of(2,7,8), List.of(9,10,2), List.of(10,2,11), List.of(2,11,12), List.of(13,14,2), List.of(14,2,15), List.of(2,15,16));
+        for(List<Integer> positions: testCombinations){
+            int pos1=positions.get(0), pos2=positions.get(1), pos3=positions.get(2);
+            if (map.get(pos1) && map.get(pos2) && map.get(pos3)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Creates a list of boolean values for all possible positions around a point. The values are false if the
+     * position doesn't exist or is not in the provided list of player pieces. The value is true if it is
+     * in the player Pieces.
+     * @param position
+     * @param playerPieces
+     * @return
+     */
+    public List<Boolean> createMap(Point position, List<Integer> playerPieces){
+        List<Boolean> map = new ArrayList<>();
+        for (int i = 0; i < 17; i ++){
+            map.add(false);
+        }
+        List<Point> testPoints = List.of(new Point(0,-(SPACE*2)), new Point(0,-SPACE), new Point(0,0), new Point(0, SPACE), new Point(0,SPACE*2), //4
+                new Point(-(SPACE * 2),-(SPACE * 2)), new Point(-SPACE, -SPACE), new Point(SPACE, SPACE), new Point(SPACE*2, SPACE*2), //8
+                new Point(-(SPACE * 2),0), new Point(-SPACE,0), new Point(SPACE,0), new Point(SPACE * 2, 0), //12
+                new Point(-(SPACE * 2),SPACE*2), new Point(-SPACE,SPACE), new Point(SPACE,-SPACE), new Point(SPACE*2,-(SPACE * 2))); //16
+        for (Point point: testPoints){
+            Point testPoint = new Point(position.getX() + point.getX() + SPACE/2, position.getY() + point.getY() + SPACE/2);
+            if (board.getSpacePosition(testPoint) >=0) {
+                if (playerPieces.contains(board.getSpacePosition(testPoint))){
+                    map.set(testPoints.indexOf(point), true);
+                }
+            }
+        }
+        //System.out.println(map);
+        return map;
     }
 
 }
