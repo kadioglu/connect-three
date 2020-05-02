@@ -8,7 +8,6 @@ import comp127graphics.events.MouseButtonEvent;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-
 public class ConnectThree {
     CanvasWindow canvas;
     gameBoard board;
@@ -23,6 +22,9 @@ public class ConnectThree {
         canvas.onClick(event -> {pieces piece = piecesManager.addPiece(event.getPosition());
         if (piece != null) {
             piece.addToCanvas(canvas);
+            canvas.draw();
+            canvas.pause(500);
+            piece.moveTo();
         }});
 //        createPiece();
     }

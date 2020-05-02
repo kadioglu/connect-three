@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class gameBoard {
-    Rectangle rectangle;
-    GraphicsGroup board;
-    Ellipse space;
-    List<Ellipse> spaces;
+    private Rectangle rectangle;
+    private GraphicsGroup board;
+    private Ellipse space;
+    private List<Ellipse> spaces;
+    private Column first, second, third, fourth, fifth;
     private final int CUSHION = 10, SPACE = 75, BOARD_WIDTH = 435, BOARD_HEIGHT = 350;
+    private final int FIRST_START = 0, FIRST_END = 3, SECOND_START = 4, SECOND_END = 7, THIRD_START = 8,
+            THIRD_END = 11, FOURTH_START = 12, FOURTH_END = 15, FIFTH_START = 16, FIFTH_END = 19;
 
     public gameBoard(int positionX, int positionY){
         board = new GraphicsGroup();
@@ -31,6 +34,11 @@ public class gameBoard {
                 board.add(space);
             }
         }
+        first = new Column(FIRST_START, FIRST_END);
+        second = new Column(SECOND_START, SECOND_END);
+        third = new Column(THIRD_START, THIRD_END);
+        fourth = new Column(FOURTH_START, FOURTH_END);
+        fifth = new Column(FIFTH_START, FIFTH_END);
     }
 
     public void addToCanvas(CanvasWindow canvas){
@@ -68,5 +76,42 @@ public class gameBoard {
             }
         }
         return -1;
+    }
+
+    /**
+     * Returns the coordinates of a space given its position
+     * @param position
+     * @return
+     */
+    public Point getSpaceCoordinates(int position){
+        Ellipse space = spaces.get(position);
+        return new Point(space.getX(), space.getY());
+    }
+
+    /**
+     * Finds the column that this position belongs to. Adds the piece to the column
+     * and returns the lowest empty position
+     * @param position
+     * @return
+     */
+    public int checkColumns(int position){
+        if (first.contains(position)){
+            return first.addPiece();
+        }
+        else if (second.contains(position)){
+            return second.addPiece();
+        }
+        else if (third.contains(position)){
+            return third.addPiece();
+        }
+        else if (fourth.contains(position)){
+            return fourth.addPiece();
+        }
+        else if (fifth.contains(position)){
+            return fifth.addPiece();
+        }
+        else {
+            return -1;
+        }
     }
 }

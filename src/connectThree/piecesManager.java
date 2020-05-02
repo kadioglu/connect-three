@@ -14,7 +14,7 @@ public class piecesManager {
     private gameBoard board;
     private List<pieces> allPieces;
     private List<Integer> player1Pieces, player2Pieces;
-    private final double SPACE = 85;
+    private final double SPACE = 85, Y_START = 0;
 
 
 
@@ -36,24 +36,30 @@ public class piecesManager {
      * @return
      */
     public pieces addPiece(Point point){
-        Point position = board.checkSpace(point);
+        Point coordinates = board.checkSpace(point);
         pieces piece;
-        if (position != null){
+        if (coordinates != null){
             int numPosition = board.getSpacePosition(point);
             if (numPosition >= 0 && allPieces.get(numPosition) == null) {
-                if (playerColor) {
-                    piece = new pieces(position.getX(), position.getY(), PLAYER_1);
-                    player1Pieces.add(numPosition);
-                    //System.out.println(checkWin(position, player1Pieces));
-                    playerColor = false;
-                } else {
-                    piece = new pieces(position.getX(), position.getY(), PLAYER_2);
-                    player2Pieces.add(numPosition);
-                    //System.out.println(checkWin(position, player2Pieces));
-                    playerColor = true;
+                int columnPosition = board.checkColumns(numPosition);
+                if (columnPosition >= 0) {
+                    Point columnCoordinates = board.getSpaceCoordinates(columnPosition);
+                    if (playerColor) {
+                        piece = new pieces(columnCoordinates.getX(), Y_START, PLAYER_1);
+                        piece.setMoveToPosition(columnCoordinates);
+                        player1Pieces.add(numPosition);
+                        //System.out.println(checkWin(position, player1Pieces));
+                        playerColor = false;
+                    } else {
+                        piece = new pieces(columnCoordinates.getX(), Y_START, PLAYER_2);
+                        piece.setMoveToPosition(columnCoordinates);
+                        player2Pieces.add(numPosition);
+                        //System.out.println(checkWin(position, player2Pieces));
+                        playerColor = true;
+                    }
+                    allPieces.set(numPosition, piece);
+                    return piece;
                 }
-                allPieces.set(numPosition, piece);
-                return piece;
             }
         }
         return null;
