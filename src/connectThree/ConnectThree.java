@@ -20,13 +20,18 @@ public class ConnectThree {
         board.addToCanvas(canvas);
         canvas.draw();
         canvas.onClick(event -> {pieces piece = piecesManager.addPiece(event.getPosition());
-        if (piece != null) {
-            piece.addToCanvas(canvas);
-            canvas.draw();
-            canvas.pause(500);
-            piece.moveTo();
-        }});
+            if (piece != null) {
+                piece.addToCanvas(canvas);
+                canvas.draw();
+                canvas.pause(500);
+                piece.moveTo();
+            }});
 //        createPiece();
+
+        board.updatePlayerStatus(canvas);
+        board.addResetButton(canvas);
+
+
     }
 
     public static void main(String[] args){

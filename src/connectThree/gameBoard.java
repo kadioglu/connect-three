@@ -1,10 +1,9 @@
 package connectThree;
 
-import comp127graphics.CanvasWindow;
-import comp127graphics.Ellipse;
-import comp127graphics.GraphicsGroup;
+import comp127graphics.*;
 import comp127graphics.Point;
 import comp127graphics.Rectangle;
+import comp127graphics.ui.Button;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +18,11 @@ public class gameBoard {
     private final int CUSHION = 10, SPACE = 75, BOARD_WIDTH = 435, BOARD_HEIGHT = 350;
     private final int FIRST_START = 0, FIRST_END = 3, SECOND_START = 4, SECOND_END = 7, THIRD_START = 8,
             THIRD_END = 11, FOURTH_START = 12, FOURTH_END = 15, FIFTH_START = 16, FIFTH_END = 19;
+
+    Rectangle playerStatus;
+    GraphicsText playerText;
+    Color playerColor = Color.red;
+    boolean state = true;
 
     public gameBoard(int positionX, int positionY){
         board = new GraphicsGroup();
@@ -39,6 +43,8 @@ public class gameBoard {
         third = new Column(THIRD_START, THIRD_END);
         fourth = new Column(FOURTH_START, FOURTH_END);
         fifth = new Column(FIFTH_START, FIFTH_END);
+
+        addPlayerStatus();
     }
 
     public void addToCanvas(CanvasWindow canvas){
@@ -113,5 +119,37 @@ public class gameBoard {
         else {
             return -1;
         }
+    }
+
+    private void addPlayerStatus(){
+        playerStatus = new Rectangle(35+BOARD_WIDTH/2,20,25,25);
+        playerStatus.setFillColor(playerColor);
+        playerText = new GraphicsText("Players turn!", 280,35);
+        board.add(playerText);
+        board.add(playerStatus);
+    }
+
+    public void updatePlayerStatus(CanvasWindow canvas){
+        canvas.onClick(event -> {
+            if (state) {
+                state = false;
+                playerColor = Color.blue;
+            }
+            else {
+                state = true;
+                playerColor = Color.red;
+            }
+            playerStatus.setFillColor(playerColor);
+        });
+    }
+
+    public void addResetButton(CanvasWindow canvas){
+        comp127graphics.ui.Button reset = new Button("Reset Game");
+        reset.setPosition(437.5,467.5);
+        board.add(reset);
+        reset.onClick(() -> {
+            canvas.removeAll();
+
+        });
     }
 }
