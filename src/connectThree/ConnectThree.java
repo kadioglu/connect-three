@@ -1,17 +1,13 @@
 package connectThree;
 
 import comp127graphics.CanvasWindow;
-import comp127graphics.Ellipse;
-import comp127graphics.Point;
-import comp127graphics.events.MouseButtonEvent;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
 
 public class ConnectThree {
-    CanvasWindow canvas;
-    gameBoard board;
-    piecesManager piecesManager;
+    private CanvasWindow canvas;
+    private gameBoard board;
+    private piecesManager piecesManager;
+    private boolean gameWon = false;
 
     public ConnectThree(){
         canvas = new CanvasWindow("Connect Three", 550, 500);
@@ -22,9 +18,11 @@ public class ConnectThree {
         canvas.onClick(event -> {pieces piece = piecesManager.addPiece(event.getPosition());
             if (piece != null) {
                 piece.addToCanvas(canvas);
-                canvas.draw();
-                canvas.pause(500);
-                piece.moveTo();
+                move(piece);
+                gameWon = piecesManager.checkWin(piece);
+                if (gameWon){
+                    System.out.println("GameWon!");
+                }
             }});
 //        createPiece();
 
@@ -38,6 +36,21 @@ public class ConnectThree {
         new ConnectThree();
     }
 
+    /**
+     * Animates the piece so that it moves down toward its move to position.
+     * @param piece
+     */
+    public void move(pieces piece){
+        double yCoordinate = piece.getPosition().getY();
+        while(yCoordinate <= piece.getMoveToPosition().getY()){
+            piece.setYPosition(yCoordinate);
+            canvas.draw();
+            yCoordinate += 3;
+        }
+    }
+
+    }
+
 //    private void createPiece(){
 //        canvas.onClick(e ->  {
 //            pieces piece = new pieces(e.getPosition().getX()-37.5,e.getPosition().getY()-37.5,Color.blue);
@@ -45,4 +58,3 @@ public class ConnectThree {
 //        });
 //
 //    }
-}

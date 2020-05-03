@@ -22,7 +22,7 @@ public class Test {
         player.add(9);
         player.add(10);
         player.add(12);
-        boolean result = manager.checkWin(board.getSpaceCoordinates(10), player);
-        System.out.println(result);
+//        boolean result = manager.checkWin(board.getSpaceCoordinates(10), player);
+//        System.out.println(result);
     }
 }

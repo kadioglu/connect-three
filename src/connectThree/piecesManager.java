@@ -66,14 +66,20 @@ public class piecesManager {
     }
 
     /**
-     * Checks all possible positions around the provided position to see if there are three
+     * Checks all possible positions around the provided piece to see if there are three
      * pieces, of that player's, in a row. Returns true if the game has been won and false if it hasn't.
-     * @param position
-     * @param playerPieces
+     * @param piece
      * @return
      */
-    public boolean checkWin(Point position, List<Integer> playerPieces){
-        List<Boolean> map = createMap(position, playerPieces);
+    public boolean checkWin(pieces piece){           //Point position, List<Integer> playerPieces){
+        List<Integer> playerPieces;
+        if (piece.getColor() == PLAYER_1){
+            playerPieces = player1Pieces;
+        }
+        else {
+            playerPieces = player2Pieces;
+        }
+        List<Boolean> map = createMap(piece.getPosition(), playerPieces);       //position, playerPieces);
         List<List<Integer>> testCombinations = List.of(List.of(0,1,2), List.of(1,2,3), List.of(2,3,4), List.of(5,6,2), List.of(6,2,7),
                 List.of(2,7,8), List.of(9,10,2), List.of(10,2,11), List.of(2,11,12), List.of(13,14,2), List.of(14,2,15), List.of(2,15,16));
         for(List<Integer> positions: testCombinations){
