@@ -47,17 +47,17 @@ public class piecesManager {
                     if (playerColor) {
                         piece = new pieces(columnCoordinates.getX(), Y_START, PLAYER_1);
                         piece.setMoveToPosition(columnCoordinates);
-                        player1Pieces.add(numPosition);
+                        player1Pieces.add(columnPosition);
                         //System.out.println(checkWin(position, player1Pieces));
                         playerColor = false;
                     } else {
                         piece = new pieces(columnCoordinates.getX(), Y_START, PLAYER_2);
                         piece.setMoveToPosition(columnCoordinates);
-                        player2Pieces.add(numPosition);
+                        player2Pieces.add(columnPosition);
                         //System.out.println(checkWin(position, player2Pieces));
                         playerColor = true;
                     }
-                    allPieces.set(numPosition, piece);
+                    allPieces.set(columnPosition, piece);
                     return piece;
                 }
             }
