@@ -24,6 +24,11 @@ public class gameBoard {
     Color playerColor = Color.red;
     boolean state = true;
 
+    /**
+     * Creates a game board with 20 spaces and 5 columns.
+     * @param positionX
+     * @param positionY
+     */
     public gameBoard(int positionX, int positionY){
         board = new GraphicsGroup();
         spaces = new ArrayList<>();

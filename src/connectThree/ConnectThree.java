@@ -1,35 +1,53 @@
 package connectThree;
 
 import comp127graphics.CanvasWindow;
+import comp127graphics.GraphicsText;
 
 
 public class ConnectThree {
     private CanvasWindow canvas;
     private gameBoard board;
     private piecesManager piecesManager;
+    private GraphicsText winMessage;
     private boolean gameWon = false;
 
-    public ConnectThree(){
+    /**
+     * Creates an instance of the Connect Three game
+     */
+    public ConnectThree() {
         canvas = new CanvasWindow("Connect Three", 550, 500);
         board = new gameBoard(50, 50);
         piecesManager = new piecesManager(board);
+        winMessage = new GraphicsText("    ", 200, 440);
+        winMessage.setFontSize(30);
+        canvas.add(winMessage);
         board.addToCanvas(canvas);
         canvas.draw();
+        gamePlay();
+
+    }
+
+    /**
+     * Adds a piece to the board when the user clicks on a valid location. Displays
+     * a message and resets the game if the game has been won.
+     */
+    public void gamePlay() {
         canvas.onClick(event -> {pieces piece = piecesManager.addPiece(event.getPosition());
             if (piece != null) {
                 piece.addToCanvas(canvas);
                 move(piece);
                 gameWon = piecesManager.checkWin(piece);
                 if (gameWon){
-                    System.out.println("GameWon!");
+                    winMessage.setText("Game Won!!!");
+                    winMessage.setFillColor(piece.getColor());
+                    canvas.draw();
+                    canvas.pause(3000);
+                    reset();
                 }
             }});
-//        createPiece();
 
         board.updatePlayerStatus(canvas);
         board.addResetButton(canvas);
-
-
     }
 
     public static void main(String[] args){
@@ -49,12 +67,19 @@ public class ConnectThree {
         }
     }
 
+    /**
+     * Clears the canvas and creates a new board and Pieces Manager. Then
+     * resumes normal game play.
+     */
+    public void reset(){
+        canvas.removeAll();
+        board = new gameBoard(50, 50);
+        piecesManager = new piecesManager(board);
+        board.addToCanvas(canvas);
+        winMessage.setText("     ");
+        canvas.add(winMessage);
+        canvas.draw();
+        gamePlay();
     }
 
-//    private void createPiece(){
-//        canvas.onClick(e ->  {
-//            pieces piece = new pieces(e.getPosition().getX()-37.5,e.getPosition().getY()-37.5,Color.blue);
-//            piece.addToCanvas(canvas);
-//        });
-//
-//    }
+    }

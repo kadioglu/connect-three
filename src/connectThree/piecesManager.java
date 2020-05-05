@@ -29,9 +29,9 @@ public class piecesManager {
     }
 
     /**
-     * Adds a piece to the board at the selected position if the point is inside a space and if
-     * a piece has not already been added to that spot. Adds that piece to the list of pieces at
-     * the correct index according to what position it has (see position of spaces on gameboard).
+     * Returns a piece with the move to position at the lowest open position in that column if the point is inside a space and
+     * the column is not full. Adds that piece to the list of pieces at the correct index according to what
+     * position it has and to the player list.
      * @param point
      * @return
      */
@@ -48,13 +48,11 @@ public class piecesManager {
                         piece = new pieces(columnCoordinates.getX(), Y_START, PLAYER_1);
                         piece.setMoveToPosition(columnCoordinates);
                         player1Pieces.add(columnPosition);
-                        //System.out.println(checkWin(position, player1Pieces));
                         playerColor = false;
                     } else {
                         piece = new pieces(columnCoordinates.getX(), Y_START, PLAYER_2);
                         piece.setMoveToPosition(columnCoordinates);
                         player2Pieces.add(columnPosition);
-                        //System.out.println(checkWin(position, player2Pieces));
                         playerColor = true;
                     }
                     allPieces.set(columnPosition, piece);
@@ -116,7 +114,6 @@ public class piecesManager {
                 }
             }
         }
-        //System.out.println(map);
         return map;
     }
 
