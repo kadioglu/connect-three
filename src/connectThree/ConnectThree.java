@@ -2,6 +2,7 @@ package connectThree;
 
 import comp127graphics.CanvasWindow;
 import comp127graphics.GraphicsText;
+import comp127graphics.ui.Button;
 
 
 public class ConnectThree {
@@ -47,7 +48,7 @@ public class ConnectThree {
             }});
 
         board.updatePlayerStatus(canvas);
-        board.addResetButton(canvas);
+        addResetButton();
     }
 
     public static void main(String[] args){
@@ -82,4 +83,11 @@ public class ConnectThree {
         gamePlay();
     }
 
+    public void addResetButton(){
+        comp127graphics.ui.Button resetButton = new Button("Reset Game");
+        resetButton.setPosition(437.5,467.5);
+        canvas.add(resetButton);
+        resetButton.onClick(this::reset);
     }
+
+}

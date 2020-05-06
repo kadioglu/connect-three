@@ -148,13 +148,5 @@ public class gameBoard {
         });
     }
 
-    public void addResetButton(CanvasWindow canvas){
-        comp127graphics.ui.Button reset = new Button("Reset Game");
-        reset.setPosition(437.5,467.5);
-        board.add(reset);
-        reset.onClick(() -> {
-            canvas.removeAll();
 
-        });
-    }
 }
