@@ -3,7 +3,6 @@ package connectThree;
 import comp127graphics.*;
 import comp127graphics.Point;
 import comp127graphics.Rectangle;
-import comp127graphics.ui.Button;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -126,6 +125,10 @@ public class gameBoard {
         }
     }
 
+    /**
+     * Create a Rectangle and sets it to the player's color and also creates
+     * a GraphicsText and adds both of the graphic objects to the board.
+     */
     private void addPlayerStatus(){
         playerStatus = new Rectangle(35+BOARD_WIDTH/2,20,25,25);
         playerStatus.setFillColor(playerColor);
@@ -134,6 +137,11 @@ public class gameBoard {
         board.add(playerStatus);
     }
 
+    /**
+     * Takes on clicks from the given canvas and updates the boolean state
+     * and sets the playerStatus object to the responding color.
+     * @param canvas
+     */
     public void updatePlayerStatus(CanvasWindow canvas){
         canvas.onClick(event -> {
             if (state) {
@@ -147,6 +155,10 @@ public class gameBoard {
             playerStatus.setFillColor(playerColor);
         });
     }
+
+
+
+
 
 
 }
