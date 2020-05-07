@@ -8,8 +8,6 @@ public class Column {
 
     /**
      * Creates a column that starts with the first position and ends with the last position.
-     * @param firstPosition
-     * @param lastPosition
      */
     public Column(int firstPosition, int lastPosition){
         this.firstPosition = firstPosition;
@@ -22,8 +20,7 @@ public class Column {
 
     /**
      * Checks if the position is within the positions covered by this column.
-     * @param position
-     * @return
+     * @return true if within acceptable positions
      */
     public boolean contains(int position){
         return (position >= firstPosition && position <= lastPosition);
@@ -31,7 +28,6 @@ public class Column {
 
     /**
      * Fills in the space and returns the position.
-     * @return
      */
     public int addPiece(){
         int position = getOpenPosition();
@@ -43,7 +39,6 @@ public class Column {
 
     /**
      * Returns the lowest empty position. If the column is full, returns -1.
-     * @return
      */
     public int getOpenPosition(){
         for (int i = lastPosition; i >= firstPosition; i--){
@@ -53,13 +48,5 @@ public class Column {
             }
         }
         return -1;
-    }
-
-    public int getFirstPosition() {
-        return firstPosition;
-    }
-
-    public int getLastPosition(){
-        return lastPosition;
     }
 }

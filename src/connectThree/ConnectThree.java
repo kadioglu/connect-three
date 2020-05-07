@@ -6,9 +6,9 @@ import comp127graphics.Rectangle;
 import comp127graphics.ui.Button;
 import java.awt.*;
 
-
-
-
+/**
+ * Creates a runs a game of ConnectThree
+ */
 public class ConnectThree {
     private CanvasWindow canvas;
     private gameBoard board;
@@ -55,8 +55,6 @@ public class ConnectThree {
                     canvas.pause(3000);
                     reset();
                     addScore();
-
-
                 }
             }});
 
@@ -70,7 +68,6 @@ public class ConnectThree {
 
     /**
      * Animates the piece so that it moves down toward its move to position.
-     * @param piece
      */
     public void move(pieces piece){
         double yCoordinate = piece.getPosition().getY();

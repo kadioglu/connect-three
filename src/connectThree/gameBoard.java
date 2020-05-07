@@ -3,7 +3,6 @@ package connectThree;
 import comp127graphics.*;
 import comp127graphics.Point;
 import comp127graphics.Rectangle;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +17,15 @@ public class gameBoard {
     private final int FIRST_START = 0, FIRST_END = 3, SECOND_START = 4, SECOND_END = 7, THIRD_START = 8,
             THIRD_END = 11, FOURTH_START = 12, FOURTH_END = 15, FIFTH_START = 16, FIFTH_END = 19;
 
-    Rectangle playerStatus;
-    GraphicsText playerText;
-    Color playerColor = Color.red;
-    boolean state = true;
+    private Rectangle playerStatus;
+    private GraphicsText playerText;
+    private Color playerColor = Color.red;
+    private boolean state = true;
 
     /**
      * Creates a game board with 20 spaces and 5 columns.
-     * @param positionX
-     * @param positionY
+     * @param positionX the x value upper left corner
+     * @param positionY the y value of the upper left corner
      */
     public gameBoard(int positionX, int positionY){
         board = new GraphicsGroup();
@@ -51,6 +50,9 @@ public class gameBoard {
         addPlayerStatus();
     }
 
+    /**
+     * Adds the graphics group to the given canvas
+     */
     public void addToCanvas(CanvasWindow canvas){
         canvas.add(board);
     }
@@ -58,8 +60,6 @@ public class gameBoard {
     /**
      * Returns the (x, y) position of the space if the point is inside one of the spaces.
      * Returns null if the point is not inside a space.
-     * @param point
-     * @return
      */
     public Point checkSpace(Point point){
         for (Ellipse space: spaces){
@@ -71,13 +71,11 @@ public class gameBoard {
     }
 
     /**
-     * Returns the index of the position in the list. Returns -1 if the point is outside the list.
+     * Returns the index of the position in the list for a given point. Returns -1 if the point is outside the list.
      *  0 4  8 12 16
      *  1 5  9 13 17
      *  2 6 10 14 18
      *  3 7 11 15 19
-     * @param point
-     * @return
      */
     public int getSpacePosition(Point point){
         for (Ellipse space: spaces){
@@ -89,9 +87,7 @@ public class gameBoard {
     }
 
     /**
-     * Returns the coordinates of a space given its position
-     * @param position
-     * @return
+     * Returns the coordinates of a space given its position in the grid of spaces
      */
     public Point getSpaceCoordinates(int position){
         Ellipse space = spaces.get(position);
@@ -101,8 +97,6 @@ public class gameBoard {
     /**
      * Finds the column that this position belongs to. Adds the piece to the column
      * and returns the lowest empty position
-     * @param position
-     * @return
      */
     public int checkColumns(int position){
         if (first.contains(position)){
